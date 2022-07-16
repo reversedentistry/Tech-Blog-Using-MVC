@@ -9,7 +9,7 @@ router.get("/", async (req, res) => {
             include: [
                 {
                     model: User, 
-                    attributes: ["name"],
+                    attributes: ["username"],
                 }, 
             ],
         });
@@ -22,3 +22,5 @@ router.get("/", async (req, res) => {
 
     } catch (err) {}
 })
+
+module.exports = router;
