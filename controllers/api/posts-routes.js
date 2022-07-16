@@ -1,6 +1,34 @@
 const router = require('express').Router();
-const { Post } = require("../../models"); 
+const { User, Post, Comment } = require("../../models");
 const withAuth = require("../../utils/auth")
+
+router.get("/:id", async (req, res) => {
+    try {
+        const postData = await Post.findByPk(req.params.id, {
+            include: [
+                {
+                    model: Comment,
+                    attributes: ["comment_text"],
+                    include: {
+                        model: User,
+                        attributes: ["username"]
+                    }
+                },
+                {
+                    model: User,
+                    attributes: ["username"]
+                }
+            ]
+        });
+
+        if (!postData) {
+            res.status(404).json({ message: "No post found with this ID." });
+        };
+      
+    } catch (err) {
+        res.status(500).json(err); 
+    }
+}); 
 
 router.post("/", withAuth, async (res, req) => {
     try {
@@ -10,20 +38,20 @@ router.post("/", withAuth, async (res, req) => {
         });
         res.status(200).json(err);
     } catch (err) {
-        res.status(400).json(err); 
+        res.status(400).json(err);
     }
-}); 
+});
 
 router.put("/:id", withAuth, async (res, req) => {
     try {
         const updatedPost = await Post.update({
             ...req.body
-        }, 
-        {
-            where: {
-                id: req.params.id
-            }
-        }); 
+        },
+            {
+                where: {
+                    id: req.params.id
+                }
+            });
 
         if (!updatedPost) {
             res.status(404).json({ message: "No post with this ID." })
@@ -32,23 +60,23 @@ router.put("/:id", withAuth, async (res, req) => {
     } catch (err) {
         res.status(500).json(err);
     }
-}); 
+});
 
-router.delete("/:id", withAuth, (req, res) => {
+router.delete("/:id", withAuth, async (req, res) => {
     try {
         const deletedPost = await Post.destroy({
             where: {
                 id: req.params.id
             }
-        }); 
+        });
 
         if (!deletedPost) {
-            res.status(404).json({ message: "No post with this ID."})
+            res.status(404).json({ message: "No post with this ID." })
         }
         res.status(200).json(err)
     } catch (err) {
-        res.status(500).json(err); 
+        res.status(500).json(err);
     }
-}); 
+});
 
 module.exports = router; 
