@@ -1,7 +1,7 @@
 const router = require("express").Router();
-const { Post, User } = require('../models');
+const { Post, User, Comment } = require('../models');
 const withAuth = require('../utils/auth');
-const sequelize = require('../config/connection');
+
 
 router.get("/", async (req, res) => {
     try {
@@ -18,9 +18,54 @@ router.get("/", async (req, res) => {
 
         res.render("homepage", {
             posts, 
+            logged_in: req.session.logged_in
         })
 
-    } catch (err) {}
-})
+    } catch (err) {
+        res.status(500).json(err)
+    }
+}); 
+
+router.get("/signup", (req, res) => {
+    res.render("signup")
+}); 
+
+router.get("/login", (req, res) => {
+    if (req.session.logged_in) {
+        res.redirect("/profile");
+        return;
+    }
+    res.render("login")
+});
+
+router.get("/post/:id", async (req, res) => {
+    try {
+        const postData = await Post.findByPk(req.params.id, {
+            include: [
+                {
+                    model: Comment, 
+                    include: [
+                        {
+                            model: User,
+                            attributes: ["username"]
+                        }
+                    ]
+                }, 
+                {
+                    model: User, 
+                    attributes: ["username"]
+                }
+            ]
+        })
+
+        const post = postData.get({ plain: true });
+        res.render("post", {
+            ...post, 
+            logged_in: req.session.logged_in
+        })
+    } catch (err) {
+        res.status(500).json(err)
+    }
+});
 
 module.exports = router;
