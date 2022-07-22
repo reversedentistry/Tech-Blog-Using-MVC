@@ -1,0 +1,15 @@
+<div class="post-box">
+    <div class="title-bar row">
+    <h3>{{title}}</h3>
+    <p>Posted by {{user.username}} on {{format_date date_created}}</p>
+    </div>
+    <div class="post-text">
+        {{post_text}}
+    </div>
+</div>
+{{#if logged_in}}
+<div class="input-group mb-3">
+  <input type="text" class="form-control" placeholder="Your comment" aria-label="Comment" aria-describedby="button-addon2">
+  <button class="btn btn-outline-secondary" type="button" id="comment">Submit</button>
+</div>
+{{/if}}
