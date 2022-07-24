@@ -1,10 +1,9 @@
-{{#if posts.length}}
 {{#each posts as |post|}}
-<div class="post-name row">
-    <a href="/post/{{id}}">{{title}}</a>
-    <p>{{date_created}}</p>
+<div class="container-md border border-3 d-flex justify-content-between">
+    <h5><a href="/post/{{post.id}}">{{post.title}}</a></h5>
+    <p>{{format_date post.date_created}}</p>
 </div>
 {{/each}}
-{{/if}}
 
-<button type="button" class="btn btn-info">+ New Post</button>
+
+<a class="btn btn-primary" href="/newpost" role="button">+ New Post</a>
