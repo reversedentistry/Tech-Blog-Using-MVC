@@ -1,0 +1,20 @@
+<section class="container-lg mt-3 pt-2 border border-3 border-secondary">
+    <div class="title-bar">
+        <h4>Create a new post</h4>
+    </div>
+    <form class="post-creation">
+        <div class="mb-3">
+            <label for="post-title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="post-title" aria-describedby="titleHelp">
+
+        </div>
+        <div class="mb-3">
+            <label for="post-body">Content</label>
+            <textarea class="form-control" id="post-body" aria-label="With textarea"></textarea>
+        </div>
+        <div class="d-grid mx-auto mb-2">
+        <button type="submit" class="btn btn-info" id="create-post">Create</button>
+        </div>
+    </form>
+</section>
+<script src="/js/createpost.js"></script>
