@@ -8,8 +8,13 @@
     </div>
 </div>
 {{#if logged_in}}
-<div class="input-group mb-3">
+<form class="input-group mb-3" id="create-comment">
   <input type="text" class="form-control" placeholder="Your comment" aria-label="Comment" aria-describedby="button-addon2">
   <button class="btn btn-outline-secondary" type="button" id="comment">Submit</button>
-</div>
+</form>
 {{/if}}
+{{#each comments as |comment|}}
+<div class="comment-box container-sm">
+  <p>{{comment.comment_text}}</p>
+  <p>-{{comment.user.username}} {{format_date date_created}}</p>
+</div>
