@@ -15,7 +15,7 @@
 
 {{/if}}
 {{#each comments as |comment|}}
-<div class="container-sm border border-2">
+<div class="container-sm border border-2 mb-3">
   <p>{{comment.comment_text}}</p>
   <p>-{{comment.user.username}} {{format_date date_created}}</p>
 </div>
