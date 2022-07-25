@@ -1,0 +1,20 @@
+<section class="container-lg mt-3 pt-2 border border-3 border-secondary">
+    <div class="title-bar">
+        <h4>Edit this post</h4>
+    </div>
+    <form class="edit-post-form" id="edit-post-form">
+        <div class="mb-3">
+            <label for="post-title" class="form-label">Title</label>
+            <textarea class="form-control" id="post-title">{{title}}</textarea>
+        </div>
+        <div class="mb-3">
+            <label for="post-body">Content</label>
+            <textarea class="form-control" id="post-body" aria-label="With textarea">{{post_text}}</textarea>
+        </div>
+        <div class="d-grid gap-2 mx-auto mb-2">
+        <button type="submit" class="btn btn-info" id="edit-post">Update</button>
+        <button type="submit" class="btn btn-info" id="delete-post">Delete</button>
+        </div>
+    </form>
+</section>
+<script src="/js/editpost.js"></script>
